@@ -1,3 +1,4 @@
+import { homeBlank, homeEn } from "./i18n-home";
 import { extraAm, extraEn, extraOm } from "./i18n-extra";
 // Interface wording. English, Amharic and Afaan Oromoo are complete; other
 // languages fall back to English for interface text (Quran translations still switch).
@@ -96,6 +97,7 @@ const en = {
   hadithLoadError: "This hadith could not be opened.",
   open: "Open",
   ...extraEn,
+  ...homeEn,
 };
 export type MsgKey = keyof typeof en;
 type Dict = Record<MsgKey, string>;
@@ -195,6 +197,7 @@ const am: Dict = {
   hadithLoadError: "ይህን ሐዲስ መክፈት አልተቻለም።",
   open: "ክፈት",
   ...extraAm,
+  ...homeBlank,
 };
 
 const om: Dict = {
@@ -292,6 +295,7 @@ const om: Dict = {
   hadithLoadError: "Hadiisa kana banuun hin danda'amne.",
   open: "Bani",
   ...extraOm,
+  ...homeBlank,
 };
 
 const DICTS: Partial<Record<string, Dict>> = { en, am, om };
