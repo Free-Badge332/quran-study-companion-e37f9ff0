@@ -61,3 +61,11 @@ export function haptic(strong = false) {
     /* unsupported */
   }
 }
+
+export const MAX_TARGET = 10_000;
+/** A user-typed custom target: whole number from 1 to MAX_TARGET, otherwise rejected (null). */
+export function parseCustomTarget(input: string): number | null {
+  const n = Number(input.trim());
+  if (!Number.isInteger(n) || n < 1 || n > MAX_TARGET) return null;
+  return n;
+}
