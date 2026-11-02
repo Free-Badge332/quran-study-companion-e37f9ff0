@@ -11,8 +11,6 @@ import { addReadingSeconds, isBookmarked, markVerseRead, toggleBookmark, useProg
 
 import { Button } from '@/components/ui/button';
 import { RECITERS, isSurahReciter, reciterById } from '@/lib/reciters';
-import { RiwayahText } from '@/components/riwayah-text';
-import { riwayahKey } from '@/lib/riwayah';
 import { SurahPlayer } from '@/components/surah-player';
 import { AudioDownloads } from '@/components/audio-downloads';
 import { usePreference } from '@/lib/preferences';
@@ -82,7 +80,6 @@ function ChapterPage() {
 
   if (!meta) return <p className="p-10 text-center text-muted-foreground">{t("surahNotFound")}</p>;
 
-  const riwayah = reciterById(reader)?.riwayah ?? "Hafs an Asim";
   if (mode === "reading") {
     return (
       <div className="fixed inset-0 z-[60] overflow-y-auto bg-background">
@@ -94,9 +91,7 @@ function ChapterPage() {
           <p className="mb-2 text-center font-arabic text-3xl text-primary">{meta.name.ar}</p>
           {query.isPending && <div className="h-64 animate-pulse rounded-xl bg-muted" />}
           {query.isError && <p role="alert" className="text-center text-destructive">{t("loadError")}</p>}
-          {query.data && (riwayahKey(riwayah) && riwayahKey(riwayah) !== "hafs"
-            ? <RiwayahText riwayah={riwayah} chapter={query.data} size={size} full />
-            : <Reading chapter={query.data} size={size} leading={leading} full />)}
+          {query.data && <Reading chapter={query.data} size={size} leading={leading} full />}
         </div>
       </div>
     );
@@ -159,7 +154,6 @@ function ChapterPage() {
       </div>
 
       {isSurahReciter(reader) ? <div className="mb-6"><SurahPlayer reader={reader} chapter={num} downloadedOnly={source === 'downloaded'} /></div> : <AudioDownloads reader={reader} chapter={num} count={meta.totalVerses} />}
-      {query.data && <RiwayahText riwayah={riwayah} chapter={query.data} size={size} />}
 
       {query.isPending && <div className="h-64 animate-pulse rounded-xl bg-muted" />}
       {query.isError && <div role="alert" className="space-y-3 text-center"><p className="text-destructive">{t("loadError")}</p><Button variant="outline" disabled={query.isFetching} onClick={() => void query.refetch()}><RefreshCw size={16} />{t("retry")}</Button></div>}
